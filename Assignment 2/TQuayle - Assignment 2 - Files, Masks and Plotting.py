@@ -3,11 +3,17 @@
 # ASSIGNMENT:    2                                                             #
 # PART:          Files, Masks and plotting                                     #
 ################################################################################
+
+"""
+    This program will read in the given file ASFG_Ts.txt in order to comb the 
+    data to find bad entries, whether they are missing delimiters or values. I 
+    added the function to write the bad data to a file for investigation later. 
+    After combing is done, display the results of the given file.
+"""
+
 import os
 import numpy as N
 import matplotlib.pyplot as plt
-#  __location__ code found on stackoverflow.com question post. Link at bottom
-# __location__ used to find relative location of script to find file instead of
 # writing it to Canopy default address
 __location__ = os.path.realpath(os.path.join(os.getcwd(), 
                 os.path.dirname(__file__)))
@@ -36,7 +42,7 @@ for j in data:
             julDate.append(float(err_check[0]))
             lat.append(float(err_check[1]))
             lon.append(float(err_check[2]))
-            tem.append(float(err_check[3]))
+            tem.append(float(err_check[3])) #
             successFile.write(j)
     except ValueError: # The split function found words, not numbers
         errorFile.write(j)
@@ -47,11 +53,11 @@ mean = sum(tem)/len(tem) # find Mean of Temp list.
 median = N.median(tem) # Find median of Temp list, didn't know
 deviation = (sum([(i-mean)**2 for i in tem])/(len(tem)))**.5
 
-print("Records read in: ", len(data))
-print("Number of good Records: ", len(tem))
-print("Temp Mean: ", mean)
-print("Temp Median: ", median)
-print("Standard Deviation: ", deviation)
+print "Records read in: ", len(data)
+print "Number of good Records: ", len(tem)
+print "Temp Mean: ", mean
+print "Temp Median: ", median
+print "Standard Deviation: ", deviation
 
 # Creat plot with date being X-Axis and Y-Axis being recorded temp for that date
 plt.plot(julDate, tem) 
@@ -64,4 +70,3 @@ plt.show()
 readIn.close()
 errorFile.close()
 successFile.close()
-# http://stackoverflow.com/questions/4060221/how-to-reliably-open-a-file-in-the-same-directory-as-a-python-script
